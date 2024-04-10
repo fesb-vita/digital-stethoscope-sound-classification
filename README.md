@@ -43,12 +43,12 @@ from urllib.request import urlopen
 ## Korištenje
 Ulazni parametar za sustav je putanja do zvučnog zapisa u memoriji 
 ```
-p = "C:/Users/Meter/Desktop/tomo_diplomski/ICBHI_final_database/130_1p3_Ll_mc_AKGC417L.wav"
+p = "C:/Users/BITMAP/ICBHI_final_database/130_1p3_Ll_mc_AKGC417L.wav"
 ```
 
 ili raw URL za zapis sa servera. Na kraju URL-a potrebno je dodati ?raw=true.
 ```
-p = "https://github.com/ivonagrbesadragun/AudioFiles/blob/master/101_1b1_Al_sc_Meditron.wav?raw=true"
+p = "https://github.com/fesb-vita/digital-stethoscope-sound-classification/AudioFiles/blob/master/101_1b1_Al_sc_Meditron.wav?raw=true"
 ```
 
 Pozivom metode Classify kojoj se prosljeđuje putanja pokreće se klasifikacija zvukova po manjim segmentima iz snimke.
@@ -58,22 +58,22 @@ Classify(p)
 ```
 
 Predviđene klase ispisuju se za svaki od segmenata: 
-![Primjer ispisa](https://github.com/ivonagrbesadragun/SoundClassification/blob/main/ispis.PNG)
+![Primjer ispisa](https://github.com/fesb-vita/digital-stethoscope-sound-classification/SoundClassification/blob/main/ispis.PNG)
 
 ## Pojedinosti o sustavu
 Klasifikacijski sustav radi na temelju konvolucijske neuronske mreže. Ulaz u konvolucijsku mrežu je slika - spektrogram, dobiven primjenom gamaton filtera na zvučni signal, s ciljem da se što bolje oponaša ljudsko uho.
 
 
-![Transformacija podataka](https://github.com/ivonagrbesadragun/SoundClassification/blob/main/diagram.png)
+![Transformacija podataka](https://github.com/fesb-vita/digital-stethoscope-sound-classification/SoundClassification/blob/main/diagram.png)
 
 Arhitektura korištene konvolucijske neuronske mreže prikazana je na sljedećoj slici. 
-![Slojevi konvolucijske neuronske mreže](https://github.com/ivonagrbesadragun/SoundClassification/blob/main/layers.PNG)
+![Slojevi konvolucijske neuronske mreže](https://github.com/fesb-vita/digital-stethoscope-sound-classification/SoundClassification/blob/main/layers.PNG)
 
 U svrhu boljeg učenja mreže dodani su Dropout i Max Pooling slojevi te je definiran Callback od 10 epoha. 
 
 Dataset na kojem je trenirana mreža dobiven je iz javne baze respiratornih zvukova ICBHI 2017 Challenge. Iz svakog zvučnog zapisa izrezuju se segmenti od 500 ms s 25% preklapanja, koji se primjenom gamaton filtera pretvaraju u slike. Dobiveni dataset ima 65494 slika, svaka je dimenzije 128 x 128 s 3 kanala boje. Na sljedećoj slici dan je primjer spektrograma za zvučni zapis iz klase normal. 
 
-![Primjer spektrograma za zapis iz klase normal](https://github.com/ivonagrbesadragun/SoundClassification/blob/main/patient1image0.0.jpg)
+![Primjer spektrograma za zapis iz klase normal](https://github.com/fesb-vita/digital-stethoscope-sound-classification/SoundClassification/blob/main/patient1image0.0.jpg)
 
 Treniranje se provodilo na slučajno izabranim podskupovima od po 1536 elemenata, pri čemu je validacijski split 25%. Korištena funkcija gubitka je Sparse Categorical Crossentropy, promatrana metrika Sparse Categorical Accuracy, a optimizator Adam uz stopu učenja 0.001. 
 
